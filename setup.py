@@ -3,7 +3,8 @@ from setuptools import setup, find_packages
 import backdrop
 
 requires = [
-    "Flask==0.9"
+    "Flask==0.9",
+    "pymongo==2.5",
 ]
 
 readme_path = os.path.join(os.path.dirname(__file__), 'README.rst')
