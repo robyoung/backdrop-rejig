@@ -36,6 +36,6 @@ def bucket(bucket_name):
     pass
 
 
-@app.route('/bucket/<bucket_name>/upload')
+@app.route('/bucket/<bucket_name>/upload', methods=['GET', 'POST'])
 def upload(bucket_name):
     pass
