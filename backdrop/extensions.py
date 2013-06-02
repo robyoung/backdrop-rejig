@@ -22,15 +22,21 @@ class Database(object):
     def db(self):
         return current_app.extensions['backdrop.database']
 
+    def raw_queries_allowed(self, bucket_name):
+        raw_queries_config = current_app.config.get('RAW_QUERIES_ALLOWED', {})
+        return bool(raw_queries_config.get(bucket_name, False))
+
     def load_bucket(self, view):
         """Resolve a bucket name and provide bucket instance to view"""
 
         @functools.wraps(view)
         def wrapper(*args, **kwargs):
             try:
+                bucket_name = kwargs.pop('bucket_name')
                 kwargs['bucket'] = Bucket(
                     self.db,
-                    kwargs.pop('bucket_name'))
+                    bucket_name,
+                    self.raw_queries_allowed(bucket_name))
 
                 return view(*args, **kwargs)
             except InvalidBucketError:
