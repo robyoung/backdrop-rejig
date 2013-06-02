@@ -2,7 +2,7 @@ from flask import request, jsonify
 from flask_negotiate import consumes
 
 from . import app, db
-from .. import record
+from .. import record, csvutils
 from ..errors import ParseError, ValidationError
 
 
@@ -12,11 +12,16 @@ def status():
 
 
 @app.route('/<bucket_name>', methods=['POST'])
-@consumes('application/json')
+@consumes('application/json', 'text/csv')
 @db.load_bucket
 def store(bucket):
     try:
-        bucket.store(record.parse_all(request.json))
+        if request.mimetype == 'text/csv':
+            data = csvutils.parse(request.data)
+        else:
+            data = request.json
+
+        bucket.store(record.parse_all(data))
         return jsonify(status='ok')
     except (ParseError, ValidationError) as e:
         return jsonify(status='error',
