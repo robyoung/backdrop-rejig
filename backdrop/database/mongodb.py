@@ -1,5 +1,6 @@
 import pymongo
 
+
 class Database(object):
     @classmethod
     def from_config(cls, config):
