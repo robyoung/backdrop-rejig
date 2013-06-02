@@ -4,6 +4,7 @@ import backdrop
 
 requires = [
     "Flask==0.9",
+    "Flask-Negotiate",
     "pymongo==2.5",
     "python-dateutil==2.1",
     "pytz==2013b",

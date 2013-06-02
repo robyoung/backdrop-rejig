@@ -1,9 +1,9 @@
 from flask import request, jsonify
+from flask_negotiate import consumes
 
 from . import app, db
 from .. import record
 from ..errors import ParseError, ValidationError
-from ..decorators import json_required
 
 
 @app.route('/_status')
@@ -12,7 +12,7 @@ def status():
 
 
 @app.route('/<bucket_name>', methods=['POST'])
-@json_required
+@consumes('application/json')
 @db.load_bucket
 def store(bucket):
     try:
