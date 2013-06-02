@@ -5,6 +5,8 @@ import backdrop
 requires = [
     "Flask==0.9",
     "pymongo==2.5",
+    "python-dateutil==2.1",
+    "pytz==2013b",
 ]
 
 readme_path = os.path.join(os.path.dirname(__file__), 'README.rst')

@@ -2,7 +2,7 @@ import os
 
 from flask import Flask
 
-from .. import database
+from .. import extensions
 
 app = Flask(__name__)
 
@@ -12,6 +12,6 @@ if os.getenv('FLASK_ENV', 'development') != 'development':
     app.config.from_envvar('BACKDROP_SETTINGS')
     app.config.from_envvar('BACKDROP_READ_SETTINGS')
 
-app.db = database.from_config(app.config)
+db = extensions.Database(app)
 
 from . import views
